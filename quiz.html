@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="quizstyles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>QuizzifyAI</title>
+  </head>
+  <body>
+    <nav>
+      <div id="titlebar">
+        <h1 id="title_text">Quizzify<span id="AI_text">AI</span></h1>
+        <button id="home_button">Home</button>
+      </div>
+    </nav>
+    <div id="question_div">
+      <h1 id="question"></h1>
+    </div>
+    <div id="options_div">
+      <p class="option" id="option1"></p>
+      <p class="option" id="option2"></p>
+      <p class="option" id="option3"></p>
+      <p class="option" id="option4"></p>
+      <h3 id="correct">Correct</h3>
+      <h3 id="wrong">Wrong</h3>
+      <h4 id="answer"></h4>
+    </div>
+    <div id="submit_div">
+      <button id="submit_button">Submit</button>
+      <button id="next_button">Next</button>
+    </div>
+    <div id="score_div">
+      <h2></h2>
+    </div>
+    <div id="start_button"></div>
+    <script src="quizscript.js" type="module"></script>
+  </body>
+</html>
