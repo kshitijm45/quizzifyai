@@ -12,9 +12,6 @@ homebtn.addEventListener("click", function () {
 
 startbtn.addEventListener("click", function () {
   topicvalue = topic.value;
+  localStorage.setItem("topicvalue", topicvalue);
   window.location.href = "quiz.html";
 });
-
-export default function gettopic() {
-  return topicvalue;
-}

@@ -82,6 +82,10 @@ body {
   align-self: stretch;
 }
 
+p.option {
+  display: block;
+}
+
 #submit_div {
   width: 100%;
   display: flex;
@@ -212,7 +216,7 @@ h2 {
     padding: 1rem;
     font-size: 2rem;
     text-align: center;
-    margin: 0.5rem 20rem; /* Updated margin property */
+    margin: 1rem 25rem; /* Updated margin property */
   }
 
   #next_button {
