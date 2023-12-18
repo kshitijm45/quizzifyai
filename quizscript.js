@@ -14,27 +14,44 @@ document.addEventListener("DOMContentLoaded", async function () {
   let wrongmsg = document.getElementById("wrong");
   let optionsdiv = document.getElementById("options_div");
   let optionselements = optionsdiv.querySelectorAll("p.option");
+  let scorevalue = document.getElementById("score");
+  let result = document.getElementById("result");
+  let playagain_btn = document.getElementById("playagain");
+  let scorenum = document.getElementById("scorenumtext");
+  let bodyelement = document.body;
   let correctindex;
   let selectedindex;
   let option1;
   let option2;
   let option3;
   let option4;
+  let correctnum = 0;
+  let totalnum = 0;
+  let overlay = document.createElement("div");
+  overlay.style.content = "";
+  overlay.style.position = "fixed";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.background = "rgba(128, 128, 128, 0.6)";
   homebtn.addEventListener("click", function () {
     window.location.href = "index.html";
   });
+  playagain_btn.addEventListener("click", function () {
+    window.location.href = "index.html";
+  });
   const storedTopicValue = localStorage.getItem("topicvalue");
-  if (storedTopicValue) {
-    // Use storedTopicValue as needed
-    console.log("Topic Value:", storedTopicValue);
-  } else {
-    console.log("Topic Value not found");
-  }
+  const storedNumValue = localStorage.getItem("numbervalue");
   await getquestion();
-  let usedQuestions = new Set();
+  scorevalue.innerHTML = `Question 1 of ${storedNumValue}`;
   async function getquestion() {
     try {
-      console.log(storedTopicValue);
+      questionfield.innerHTML = "Loading...";
+      option1field.innerHTML = "Loading...";
+      option2field.innerHTML = "Loading...";
+      option3field.innerHTML = "Loading...";
+      option4field.innerHTML = "Loading...";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -46,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           messages: [
             {
               role: "user",
-              content: `Give a unique and interesting question and answer which is not likely to change after 2021 (MAKE SURE THE ANSWER IS CORRECT) on the topic ${storedTopicValue} in this format Q: What is the capital of France?
+              content: `Give a question and answer that you have never asked before and is extremely tough which is not likely to change after 2021 (MAKE SURE THE ANSWER IS CORRECT) on the topic ${storedTopicValue} in this format Q: What is the capital of France?
                   1. Paris
                   2. Delhi
                   3. London
@@ -59,11 +76,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
       const data = await response.json();
       const content = data.choices[0].message.content;
-      console.log(content);
       const pattern =
         /Q: (.+?)\n?(1\. .+?)\n?(2\. .+?)\n?(3\. .+?)\n?(4\. .+?)\n?Answer: (\d+)/s;
       const matches = content.match(pattern);
-      console.log(matches);
       if (matches) {
         const question = matches[1];
         option1 = { number: "1", text: matches[2] };
@@ -76,8 +91,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         option2field.innerHTML = option2.text;
         option3field.innerHTML = option3.text;
         option4field.innerHTML = option4.text;
-        console.log("got");
-        console.log(correctindex);
       } else {
         console.log("Invalid format");
       }
@@ -118,12 +131,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     option1field.style.backgroundColor = "#1884ffe9";
   });
   submitbtn.addEventListener("click", function () {
+    totalnum++;
     optionselements.forEach((element) => {
       element.style.display = "none";
     });
     submitbtn.style.display = "none";
     answermsg.style.display = "block";
     if (selectedindex == correctindex) {
+      correctnum++;
       correctmsg.style.display = "block";
       switch (correctindex) {
         case "1":
@@ -147,6 +162,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           answermsg.innerHTML = "The correct answer is: " + option4.text;
           break;
       }
+      confetti();
     } else {
       wrongmsg.style.display = "block";
       switch (correctindex) {
@@ -168,6 +184,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           break;
       }
     }
+
     nextbtn.style.display = "block";
   });
   nextbtn.addEventListener("click", async function () {
@@ -179,6 +196,45 @@ document.addEventListener("DOMContentLoaded", async function () {
     correctmsg.style.display = "none";
     wrongmsg.style.display = "none";
     answermsg.style.display = "none";
+    scorevalue.innerHTML = `Question ${totalnum + 1} of ${storedNumValue}`;
+    if (totalnum == storedNumValue) {
+      result.show();
+      bodyelement.appendChild(overlay);
+      scorenum.innerHTML = correctnum;
+      var duration = 15 * 1000;
+      var animationEnd = Date.now() + duration;
+      var defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 10000,
+      };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      var interval = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        var particleCount = 50 * (timeLeft / duration);
+        // since particles fall down, start a bit higher than random
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        });
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+        });
+      }, 250);
+    }
     await getquestion();
   });
 });
