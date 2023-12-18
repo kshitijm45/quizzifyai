@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  let apikey = process.env.REACT_APP_OPENAI_API_KEY;
   let url = "https://api.openai.com/v1/chat/completions";
   let homebtn = document.getElementById("home_button");
   let submitbtn = document.getElementById("submit_button");
@@ -207,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         startVelocity: 30,
         spread: 360,
         ticks: 60,
-        zIndex: 10000,
+        zIndex: 10005,
       };
 
       function randomInRange(min, max) {
