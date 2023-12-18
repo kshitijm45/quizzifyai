@@ -91,11 +91,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         option3field.innerHTML = option3.text;
         option4field.innerHTML = option4.text;
       } else {
-        console.log("Invalid format");
       }
-    } catch (error) {
-      console.log("Error");
-    }
+    } catch (error) {}
   }
   option1field.addEventListener("click", function () {
     console.log("clicked");
@@ -187,6 +184,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     nextbtn.style.display = "block";
   });
   nextbtn.addEventListener("click", async function () {
+    option3field.style.backgroundColor = "#1884ffe9";
+    option2field.style.backgroundColor = "#1884ffe9";
+    option1field.style.backgroundColor = "#1884ffe9";
+    option4field.style.backgroundColor = "#1884ffe9";
     nextbtn.style.display = "none";
     optionselements.forEach((element) => {
       element.style.display = "block";
@@ -206,7 +207,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         startVelocity: 30,
         spread: 360,
         ticks: 60,
-        zIndex: 10005,
+        zIndex: 10015,
       };
 
       function randomInRange(min, max) {
