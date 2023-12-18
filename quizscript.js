@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  let apikey = "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";
+  let apikey = process.env.REACT_APP_OPENAI_API_KEY;
   let url = "https://api.openai.com/v1/chat/completions";
   let homebtn = document.getElementById("home_button");
   let submitbtn = document.getElementById("submit_button");

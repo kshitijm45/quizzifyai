@@ -1,5 +1,3 @@
-let apikey = "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";
-let url = "https://api.openai.com/v1/chat/completions";
 let homebtn = document.getElementById("home_button");
 let startbtn = document.getElementById("start_button");
 let topic = document.getElementById("topic_input");
